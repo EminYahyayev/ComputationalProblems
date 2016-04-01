@@ -5,6 +5,7 @@
 # Расчитать траекторию
 
 from __future__ import print_function
+from __future__ import unicode_literals
 from __future__ import division
 from scipy.integrate import ode
 import numpy as np
@@ -31,15 +32,15 @@ def f(t, y):
 def solve(alpha):
     # Initial conditions
     y0 = np.zeros((4, 1))
-    y0[0] = alpha
-    y0[1] = 1
-    y0[2] = 0
-    y0[3] = 0
+    y0[0] = alpha  # x(0)
+    y0[1] = 1  # y(0)
+    y0[2] = 0  # dxdt(0)
+    y0[3] = 0  # dydt(0)
 
     # Time grid for integration
     t0 = 0
     tF = 50
-    num_steps = 1000
+    num_steps = 500
     tt = np.linspace(t0, tF, num_steps)
     # Setup list ot hold solutions
     yy = np.array(y0)
@@ -64,15 +65,16 @@ def solve(alpha):
     plt.plot(tt, yy[1], 'g', label='y(t)')
     plt.legend(loc='best')
 
+    plt.title('Траектории при параметре альфа = %.2f' % alpha)
     plt.xlabel('t')
-    plt.title('ODE Solution with alpha=%.2f' % alpha)
+    plt.ylabel('f(t)')
     plt.grid()
     plt.show()
 
 
 def main():
-    alpha1 = 0.5
-    alpha2 = 0.1
+    alpha1 = 0.1
+    alpha2 = 0.5
 
     solve(alpha=alpha1)
 
