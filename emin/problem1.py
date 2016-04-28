@@ -6,7 +6,7 @@
 from __future__ import print_function
 from __future__ import division
 import numpy as np
-import utils
+import ilya.utils
 
 
 def f(x, a):
@@ -66,7 +66,7 @@ def root_less_than_positive_alpha(alpha):
     print('Начальное приближение x0: %f' % x0)
     print('==============================')
 
-    solve_and_print(alpha=alpha, x0=x0)
+    return solve_and_print(alpha=alpha, x0=x0)
 
 
 def root_greater_than_positive_alpha(alpha):
@@ -83,17 +83,21 @@ def root_greater_than_positive_alpha(alpha):
     print('Начальное приближение x0: %f' % x0)
     print('==============================')
 
-    solve_and_print(alpha=alpha, x0=x0)
+    return solve_and_print(alpha=alpha, x0=x0)
 
 
 def solve_and_print(alpha, x0):
-    (root, step) = utils.modified_fixed_point(phi, [x0], args=np.array([alpha]), xtol=1e-9, maxiter=1000)
+    (root, step) = ilya.utils.modified_fixed_point(phi, [x0], args=np.array([alpha]), xtol=1e-9, maxiter=500)
 
     print('кол-во сделанных шагов: %d' % step)
     print('корень: %f' % root)
     print('итерация в корне: %f' % phi(root, alpha))
     print('значение в корне: %e' % f(root, alpha))
+    # print('$\\varphi$ & $%.2f$ & $%d$ & $%f$ & $%f\\cdot10^{-16}$\\\\ \\hline' % (alpha, step, root, f(root, alpha)))
+    print('$\\varphi_{2}$ & $%2.f$ & $%d$ & $%f$ & $%e$\\\\ \\hline' % (alpha, step, root, f(root, alpha)))
     print('')
+
+    return [root, f(root, alpha), step, alpha]
 
 
 def solve(alpha):
@@ -114,7 +118,7 @@ def solve(alpha):
 
 
 def main():
-    solve(alpha=4.5)
+    root_with_negative_alpha(alpha=-25)
 
 
 if __name__ == "__main__":
